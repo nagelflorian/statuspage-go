@@ -10,6 +10,25 @@ Install `statuspage-go` via `go-get`:
 go get github.com/nagelflorian/statuspage-go
 ```
 
+## Getting Started
+
+Before you can initialize an instance you'll have to [obtain an API key](https://developer.statuspage.io/#section/Authentication) from the Statuspage account view.
+
+```go
+package main
+
+import "github.com/nagelflorian/statuspage-go"
+
+func main() {
+  client := statuspage.New("YOUR_API_KEY", nil)
+
+  // Use the client.
+
+  // Get the page profile for a given page id
+  page, err := client.Page.GetPage(context.TODO(), "YOUR_PAGE_ID")
+}
+```
+
 ## API Documentation
 
 The official Statuspage API documentation can be found here: [developer.statuspage.io](https://developer.statuspage.io).
