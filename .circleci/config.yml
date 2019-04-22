@@ -1,0 +1,14 @@
+version: 2.1
+jobs:
+  test_build:
+    machine: true
+    steps:
+      - checkout
+      - run:
+          name: Lint, test and build package
+          command: docker build .
+workflows:
+  version: 2
+  tests:
+    jobs:
+      - test_build
