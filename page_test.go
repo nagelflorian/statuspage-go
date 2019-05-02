@@ -2,6 +2,7 @@ package statuspage
 
 import (
 	"context"
+	"encoding/json"
 	"fmt"
 	"net/http"
 	"reflect"
@@ -188,5 +189,40 @@ func TestPageService_ListPages(t *testing.T) {
 	}
 	if !reflect.DeepEqual(page, want) {
 		t.Errorf("PageService.ListPages returned %+v, want %+v", page, want)
+	}
+}
+
+func TestPageService_UpdatePage(t *testing.T) {
+	client, mux, _, teardown := setup()
+	defer teardown()
+
+	input := UpdatePageParams{
+		Name:                     "a",
+		HiddenFromSearch:         Bool(false),
+		ViewersMustBeTeamMembers: Bool(true),
+	}
+
+	mux.HandleFunc("/v1/pages/1", func(w http.ResponseWriter, r *http.Request) {
+		testMethod(t, r, "PATCH")
+
+		v := &UpdatePageRequestBody{}
+		json.NewDecoder(r.Body).Decode(v)
+		if !reflect.DeepEqual(v.Page, input) {
+			t.Errorf("Request body = %+v, want %+v", v, input)
+		}
+
+		fmt.Fprint(w, `{"id":"1"}`)
+	})
+
+	page, err := client.Page.UpdatePage(context.Background(), "1", input)
+	if err != nil {
+		t.Errorf("PageService.UpdatePage returned error: %v", err)
+	}
+
+	want := &Page{
+		ID: String("1"),
+	}
+	if !reflect.DeepEqual(page, want) {
+		t.Errorf("PageService.UpdatePage returned %+v, want %+v", page, want)
 	}
 }
