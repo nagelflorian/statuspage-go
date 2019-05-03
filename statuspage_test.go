@@ -89,6 +89,10 @@ func Bool(v bool) *bool { return &v }
 // to store v and returns a pointer to it.
 func Int(v int) *int { return &v }
 
+// Int32 is a helper routine that allocates a new int32 value
+// to store v and returns a pointer to it.
+func Int32(v int32) *int32 { return &v }
+
 // Int64 is a helper routine that allocates a new int64 value
 // to store v and returns a pointer to it.
 func Int64(v int64) *int64 { return &v }
