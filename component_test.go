@@ -101,3 +101,26 @@ func TestComponentService_DeleteComponent(t *testing.T) {
 		t.Errorf("ComponentService.DeleteComponent returned error: %v", err)
 	}
 }
+
+func TestComponentService_UpdateComponent(t *testing.T) {
+	client, mux, _, teardown := setup()
+	defer teardown()
+
+	mux.HandleFunc("/v1/pages/1/components/2", func(w http.ResponseWriter, r *http.Request) {
+		testMethod(t, r, "PATCH")
+		fmt.Fprint(w, `{"id":"2", "status": "major_outage"}`)
+	})
+
+	componentParams := UpdateComponentParams{
+		Status: "major_outage",
+	}
+	updatedComponent, err := client.Component.UpdateComponent(context.Background(), "1", "2", componentParams)
+	if err != nil {
+		t.Errorf("ComponentService.UpdateComponent returned error: %v", err)
+	}
+
+	want := &Component{ID: String("2"), Status: String("major_outage")}
+	if !reflect.DeepEqual(updatedComponent, want) {
+		t.Errorf("ComponentService.UpdateComponent returned %+v, want %+v", updatedComponent, want)
+	}
+}

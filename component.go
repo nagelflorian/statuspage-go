@@ -71,3 +71,34 @@ func (s *ComponentService) DeleteComponent(ctx context.Context, pageID string, c
 	_, err = s.client.do(ctx, req, nil)
 	return err
 }
+
+// UpdateComponentParams are the parameters that can be changed using the update component API endpoint
+type UpdateComponentParams struct {
+	Description        string    `json:"description,omitempty"`
+	Status             string    `json:"status,omitempty"`
+	Name               string    `json:"name,omitempty"`
+	OnlyShowIfDegraded bool      `json:"only_show_if_degraded,omitempty"`
+	GroupID            string    `json:"group_id,omitempty"`
+	Showcase           bool      `json:"showcase,omitempty"`
+	StartDate          Timestamp `json:"start_date,omitempty"`
+}
+
+// UpdateComponentRequestBody is the update component request body representation
+type UpdateComponentRequestBody struct {
+	Component UpdateComponentParams `json:"component"`
+}
+
+// UpdateComponent updates a component for a given page and component id
+func (s *ComponentService) UpdateComponent(ctx context.Context, pageID string, componentID string, component UpdateComponentParams) (*Component, error) {
+	path := "v1/pages/" + pageID + "/components/" + componentID
+	payload := UpdateComponentRequestBody{Component: component}
+	req, err := s.client.newRequest("PATCH", path, payload)
+	if err != nil {
+		return nil, err
+	}
+
+	var updatedComponent Component
+	_, err = s.client.do(ctx, req, &updatedComponent)
+
+	return &updatedComponent, err
+}
