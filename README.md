@@ -1,4 +1,4 @@
-# statuspage-go [![CircleCI](https://circleci.com/gh/nagelflorian/statuspage-go/tree/master.svg?style=svg&circle-token=0137bb243e3d66387c4193d4911afca0b6dcb8ac)](https://circleci.com/gh/nagelflorian/statuspage-go/tree/master)
+# statuspage-go ![GitHub Actions](https://github.com/nagelflorian/statuspage-go/actions/workflows/main.yml/badge.svg)
 
 This repository contains a Go client library for accessing the [Statuspage REST API v1](https://developer.statuspage.io).
 
