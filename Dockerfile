@@ -1,4 +1,4 @@
-FROM circleci/golang:1.12 AS base
+FROM golang:1.12 AS base
 WORKDIR /src
 
 FROM base
