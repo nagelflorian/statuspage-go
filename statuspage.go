@@ -27,8 +27,10 @@ type Client struct {
 	common service // Reuse a single struct instead of allocating one for each service on the heap.
 
 	// Services used for talking to different parts of the Statuspage API.
-	Page      *PageService
-	Component *ComponentService
+	Page        *PageService
+	Component   *ComponentService
+	Incidents   *IncidentService
+	Maintenance *MaintenanceService
 }
 
 type service struct {
@@ -120,6 +122,8 @@ func NewClient(token string, httpClient *http.Client) *Client {
 	c.common.client = c
 	c.Page = (*PageService)(&c.common)
 	c.Component = (*ComponentService)(&c.common)
+	c.Incidents = (*IncidentService)(&c.common)
+	c.Maintenance = (*MaintenanceService)(&c.common)
 
 	return c
 }
