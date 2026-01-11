@@ -2,13 +2,15 @@
 
 ## Language & Runtime
 
-- **Go**: Version 1.12+ (as specified in go.mod and Dockerfile)
+- **Go**: Version 1.25.5+ (as specified in go.mod and Dockerfile)
 - **Standard Library**: Extensive use of net/http, encoding/json, context
+- **Upgrade Status**: Successfully upgraded from Go 1.12 to 1.25.5 with full backward compatibility
 
 ## Dependencies
 
 - **Minimal external dependencies**: The project uses only Go standard library
 - **Module system**: Uses Go modules (go.mod) for dependency management
+- **Go version**: Requires Go 1.25.5 or later for optimal performance and security
 
 ## Build System & Tools
 
@@ -39,12 +41,14 @@ docker build .
 
 - **GitHub Actions**: Automated builds on push/PR to master branch
 - **Docker-based CI**: Uses multi-stage Docker build for testing and linting
+- **Go version**: CI pipeline uses Go 1.25.5 via Docker golang:1.25 base image
 
 ## Code Quality Tools
 
 - **golint**: Static analysis and style checking
-- **go test**: Built-in testing framework with comprehensive test coverage
+- **go test**: Built-in testing framework with comprehensive test coverage (77.6% coverage)
 - **go vet**: Static analysis (implied in standard Go toolchain)
+- **Property-based testing**: Validates correctness properties across all inputs
 
 ## Architecture Patterns
 
